@@ -1,1 +1,144 @@
-{"dogs":[{"name":"Nannie","image":"/assets/corgi.png","description":"inquisitively oof calm acupuncture whereas equatorial gosh effectuate","isFavorite":true,"id":0},{"name":"Brycen","image":"/assets/chihuahua.avif","description":"bottleful after baste obliterate putrid","isFavorite":false,"id":1},{"name":"Thurman","image":"/assets/boxer.png","description":"subtle though jade indeed before island aha","isFavorite":true,"id":2},{"name":"Orrin","image":"/assets/chihuahua.avif","description":"provided after despite till watcher","isFavorite":true,"id":3},{"name":"Lucie","image":"/assets/dalmation.png","description":"psst justly browsing all solid","isFavorite":false,"id":4},{"name":"Luella","image":"/assets/blue-heeler.png","description":"smoothly idolized naturally yum that till phew","isFavorite":false,"id":5},{"name":"Shannon","image":"/assets/cowardly.png","description":"invite insistent brr truthfully athwart bah straddle assassination","isFavorite":true,"id":6},{"name":"Imani","image":"/assets/dalmation.png","description":"rattle excluding skean on recovery","isFavorite":true,"id":7},{"name":"Danyka","image":"/assets/chihuahua.avif","description":"chillax daily sally however lest","isFavorite":true,"id":8},{"name":"Toby","image":"/assets/blue-heeler.png","description":"wildly forenenst rightfully till how","isFavorite":false,"id":9},{"name":"Tyson","image":"/assets/blue-heeler.png","description":"inequality maroon however nimble segregate","isFavorite":false,"id":10},{"name":"Eulalia","image":"/assets/boxer.png","description":"foolish rarely despite fooey frantically definitive jubilant dislike","isFavorite":true,"id":11},{"name":"Lawson","image":"/assets/cowardly.png","description":"uniform but wet cruelly knowledgeable","isFavorite":true,"id":12},{"name":"Cooper","image":"/assets/dalmation.png","description":"furthermore when righteously when handlebar breathe considering so","isFavorite":false,"id":13},{"name":"Melody","image":"/assets/chihuahua.avif","description":"demotivate above hmph exploit hatbox quaver these","isFavorite":false,"id":14},{"name":"Linda","image":"/assets/blue-heeler.png","description":"instead angelic kissingly easily apropos tempting crease","isFavorite":true,"id":15},{"name":"Dakota","image":"/assets/chihuahua.avif","description":"salad hopelessly loyally gah whoever","isFavorite":true,"id":16},{"name":"Stewart","image":"/assets/blue-heeler.png","description":"bad whoever obedient modulo investigation daily yum","isFavorite":true,"id":17},{"name":"Melyssa","image":"/assets/cowardly.png","description":"drat considering youthfully unfortunately whereas aside underline jealously","isFavorite":false,"id":18},{"name":"Korey","image":"/assets/chihuahua.avif","description":"loosely at bossy surprisingly friendly for well-lit seldom","isFavorite":false,"id":19}]}
+{
+  "dogs": [
+    {
+      "name": "",
+      "image": "",
+      "description": "",
+      "isFavorite": true,
+      "id": 0
+    },
+    {
+      "name": "",
+      "image": "",
+      "description": "",
+      "isFavorite": true,
+      "id": 1
+    },
+    {
+      "name": "",
+      "image": "",
+      "description": "",
+      "isFavorite": false,
+      "id": 2
+    },
+    {
+      "name": "Lindsey",
+      "image": "/assets/dalmation.png",
+      "description": "sneaky limo bifurcate offensively why",
+      "isFavorite": true,
+      "id": 3
+    },
+    {
+      "name": "Sanford",
+      "image": "/assets/chihuahua.avif",
+      "description": "traverse shame well-documented sedately mutilate in wildly",
+      "isFavorite": true,
+      "id": 4
+    },
+    {
+      "name": "Eleanore",
+      "image": "/assets/boxer.png",
+      "description": "worth ruins wherever unimportant refresh slope bibliography softball",
+      "isFavorite": false,
+      "id": 5
+    },
+    {
+      "name": "",
+      "image": "",
+      "description": "",
+      "isFavorite": false,
+      "id": 6
+    },
+    {
+      "name": "Mabel",
+      "image": "/assets/cowardly.png",
+      "description": "physically gee fluid until boiling",
+      "isFavorite": false,
+      "id": 7
+    },
+    {
+      "name": "Marge",
+      "image": "/assets/corgi.png",
+      "description": "underneath fax spotted helpfully pegboard",
+      "isFavorite": false,
+      "id": 8
+    },
+    {
+      "name": "Lula",
+      "image": "/assets/chihuahua.avif",
+      "description": "whenever dry villainous perfumed before ick although",
+      "isFavorite": false,
+      "id": 9
+    },
+    {
+      "name": "Meda",
+      "image": "/assets/corgi.png",
+      "description": "whose zowie sage especially advanced blah jacket",
+      "isFavorite": true,
+      "id": 10
+    },
+    {
+      "name": "Isaac",
+      "image": "/assets/blue-heeler.png",
+      "description": "vain modulo vex cross because",
+      "isFavorite": false,
+      "id": 11
+    },
+    {
+      "name": "Lamont",
+      "image": "/assets/dalmation.png",
+      "description": "that overcook alliance excluding pfft",
+      "isFavorite": false,
+      "id": 12
+    },
+    {
+      "name": "Avis",
+      "image": "/assets/boxer.png",
+      "description": "ah apropos advocacy than ample unless cautious",
+      "isFavorite": false,
+      "id": 13
+    },
+    {
+      "name": "Ivy",
+      "image": "/assets/blue-heeler.png",
+      "description": "extra-large until um shark lest hence weather although",
+      "isFavorite": false,
+      "id": 14
+    },
+    {
+      "name": "Kaley",
+      "image": "/assets/cowardly.png",
+      "description": "napkin kindhearted hybridize qua bah absentmindedly purple",
+      "isFavorite": true,
+      "id": 15
+    },
+    {
+      "name": "Kaylie",
+      "image": "/assets/dalmation.png",
+      "description": "unless husky dose once parking tremendously gee brr",
+      "isFavorite": true,
+      "id": 16
+    },
+    {
+      "name": "Trent",
+      "image": "/assets/corgi.png",
+      "description": "commune untrue sanitize fine painfully",
+      "isFavorite": true,
+      "id": 17
+    },
+    {
+      "name": "Lela",
+      "image": "/assets/dalmation.png",
+      "description": "coordinate criteria violation distributor inside but ah after",
+      "isFavorite": true,
+      "id": 18
+    },
+    {
+      "name": "Ryley",
+      "image": "/assets/dalmation.png",
+      "description": "in profuse gee annually valiantly paltry parlay",
+      "isFavorite": false,
+      "id": 19
+    }
+  ]
+}

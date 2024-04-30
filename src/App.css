@@ -131,8 +131,8 @@ body {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  flex: 23;
+  justify-content: space-evenly;
+  flex: 20;
   overflow-y: auto;
 }
 
