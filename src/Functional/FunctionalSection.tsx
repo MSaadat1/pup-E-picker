@@ -88,6 +88,12 @@ export const FunctionalSection: React.FC<FunctionalSectionProps> = ({
     });
   };
 
+  const createDog = (dogs: Omit<Dog, "id">) => {
+    Requests.postDog(dogs).then(() => {
+      refetchData();
+    });
+  };
+
   return (
     <section id="main-section">
       <div className="container-header">
@@ -188,9 +194,7 @@ export const FunctionalSection: React.FC<FunctionalSectionProps> = ({
           </FunctionalDogs>
         )}
         {activeTab === "create" && (
-          <FunctionalCreateDogForm>
-            
-          </FunctionalCreateDogForm>
+          <FunctionalCreateDogForm createDog={createDog} />
         )}
         {/* <FunctionalDogs>
           {activeTab === "all" &&
@@ -251,3 +255,6 @@ export const FunctionalSection: React.FC<FunctionalSectionProps> = ({
     </section>
   );
 };
+function refetchData() {
+  throw new Error("Function not implemented.");
+}
