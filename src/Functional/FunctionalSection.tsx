@@ -4,94 +4,45 @@ import { Link } from "react-router-dom";
 import { FunctionalDogs } from "./FunctionalDogs";
 import { DogCard } from "../Shared/DogCard";
 import { Dog } from "../types";
-import { Requests } from "../api";
-import { useState } from "react";
+import { Dispatch, SetStateAction} from "react";
 import { FunctionalCreateDogForm } from "./FunctionalCreateDogForm";
+import { TActiveTab } from "./FunctionalApp";
 
 interface FunctionalSectionProps {
   allDogs: Dog[];
-  setAllDogs: React.Dispatch<React.SetStateAction<Dog[]>>;
-  favoriteDogs: Dog[];
-  setFavoriteDogs: React.Dispatch<React.SetStateAction<Dog[]>>;
-  unFavoriteDogs: Dog[];
-  setUnFavoriteDogs: React.Dispatch<React.SetStateAction<Dog[]>>;
+  currentView: TActiveTab;
+  setCurrentView: Dispatch<SetStateAction<TActiveTab>>;
+  favoritedDogs: Dog[];
+  unfavoritedDogs: Dog[];
+  handleDeleteClick: (id: number) => Promise<void>;
+  handleEmptyHeartClick: (id: number, isFavorite: boolean) => Promise<void>;
+  handleFilledHeartClick: (id: number, isFavorite: boolean) => Promise<void>;
+  createDog: (dogData: Omit<Dog, "id">) => Promise<void>;
+  isLoading: boolean;
 }
 
 export const FunctionalSection: React.FC<FunctionalSectionProps> = ({
   allDogs,
-  setAllDogs,
-  favoriteDogs,
-  setFavoriteDogs,
-  unFavoriteDogs,
-  setUnFavoriteDogs,
+  currentView,
+  setCurrentView,
+  favoritedDogs,
+  unfavoritedDogs,
+  handleDeleteClick,
+  handleEmptyHeartClick,
+  handleFilledHeartClick,
+  createDog,
+  isLoading,
 }) => {
-  const [activeTab, setActiveTab] = useState("all");
-
-  const handleTabClick = (tab: string) => {
-    setActiveTab(tab);
-  };
-  const handleFavoriteDogs = () => {
-    setActiveTab("favoriteDogs");
+  const handleActiveTab = (tab: TActiveTab) => {
+    const nextView = tab === currentView ? "all" : tab;
+    setCurrentView(nextView);
   };
 
-  const handleUnFavoriteDogs = () => {
-    setActiveTab("unFavoriteDogs");
-  };
-
-  const handleUpdateFavoriteStatus = (id: number, isFavorite: boolean) => {
-    const updatedDogs = allDogs.map((dog) =>
-      dog.id === id ? { ...dog, isFavorite: !isFavorite } : dog
-    );
-    setAllDogs(updatedDogs);
-    Requests.updateDog(id, {
-      isFavorite: !isFavorite,
-      name: "",
-      image: "",
-      description: "",
-      id: 0,
-    }).then(() => {
-      const updateFavorites = updatedDogs.filter((dog) => dog.isFavorite);
-      const updateUnFavorites = updatedDogs.filter((dog) => !dog.isFavorite);
-      setAllDogs(updatedDogs);
-      setFavoriteDogs(updateFavorites);
-      setUnFavoriteDogs(updateUnFavorites);
-    });
-  };
-
-  const handleEmptyHeartClick = (id: number, isFavorite: boolean) => {
-    const updatedDogs = allDogs.map((dog) =>
-      dog.id === id ? { ...dog, isFavorite: true } : dog
-    );
-    Requests.updateDog(id, {
-      isFavorite: isFavorite,
-      name: "",
-      image: "",
-      description: "",
-      id: 0,
-    }).then(() => {
-      const updateUnFavorites = updatedDogs.filter((dog) => dog.isFavorite);
-      const updateFavorites = updatedDogs.filter((dog) => dog.isFavorite);
-      setAllDogs(updatedDogs);
-      setUnFavoriteDogs(updateUnFavorites);
-      setFavoriteDogs(updateFavorites);
-    });
-  };
-
-  const handleDeleteClick = (id: number) => {
-    Requests.deleteDog(id).then(() => {
-      const updatedDogs = allDogs.filter((dog) => dog.id !== id);
-      setAllDogs(updatedDogs);
-      const updateFavorites = updatedDogs.filter((dog) => dog.isFavorite);
-      const updateUnFavorites = updatedDogs.filter((dog) => !dog.isFavorite);
-      setFavoriteDogs(updateFavorites);
-      setUnFavoriteDogs(updateUnFavorites);
-    });
-  };
-
-  const createDog = (dogs: Omit<Dog, "id">) => {
-    Requests.postDog(dogs).then(() => {
-      refetchData();
-    });
+  const dogsList: Record<TActiveTab, Dog[]> = {
+    all: allDogs,
+    favorited: favoritedDogs,
+    unfavorited: unfavoritedDogs,
+    createDog: [],
   };
 
   return (
@@ -103,39 +54,35 @@ export const FunctionalSection: React.FC<FunctionalSectionProps> = ({
         </Link>
         <div className="selectors">
           <div
-            className={`selector ${activeTab === "all" ? "active" : ""}`}
-            onClick={() => handleTabClick("all")}
+            className={`selector ${
+              currentView === "favorited" ? "active" : ""
+            }`}
+            onClick={() => handleActiveTab("favorited")}
           >
-            All Dogs
+            Favorited Dogs({favoritedDogs.length})
           </div>
           <div
             className={`selector ${
-              activeTab === "favoriteDogs" ? "active" : ""
+              currentView === "unfavorited" ? "active" : ""
             }`}
-            onClick={handleFavoriteDogs}
+            onClick={() => handleActiveTab("unfavorited")}
           >
-            Favorited Dogs({favoriteDogs.length})
+            Unfavorited Dogs({unfavoritedDogs.length})
           </div>
           <div
             className={`selector ${
-              activeTab === "unFavoriteDogs" ? "active" : ""
+              currentView === "createDog" ? "active" : ""
             }`}
-            onClick={handleUnFavoriteDogs}
-          >
-            Unfavorited Dogs({unFavoriteDogs.length})
-          </div>
-          <div
-            className={`selector ${activeTab === "create" ? "active" : ""}`}
-            onClick={() => handleTabClick("create")}
+            onClick={() => handleActiveTab("createDog")}
           >
             Create Dog
           </div>
         </div>
       </div>
       <div className="content-container">
-        {activeTab === "all" && (
+        {currentView !== "createDog" && (
           <FunctionalDogs>
-            {allDogs.map((dog) => (
+            {dogsList[currentView].map((dog) => (
               <DogCard
                 key={dog.id}
                 dog={dog}
@@ -146,115 +93,21 @@ export const FunctionalSection: React.FC<FunctionalSectionProps> = ({
                   handleEmptyHeartClick(dog.id, !dog.isFavorite);
                 }}
                 onHeartClick={() => {
-                  handleUpdateFavoriteStatus(dog.id, dog.isFavorite);
+                  handleFilledHeartClick(dog.id, dog.isFavorite);
                 }}
-                isLoading={false}
+                isLoading={isLoading}
               />
             ))}
           </FunctionalDogs>
         )}
-        {activeTab === "favoriteDogs" && (
-          <FunctionalDogs>
-            {favoriteDogs.map((dog) => (
-              <DogCard
-                key={dog.id}
-                dog={dog}
-                onTrashIconClick={() => {
-                  handleDeleteClick(dog.id);
-                }}
-                onEmptyHeartClick={() => {
-                  handleEmptyHeartClick(dog.id, !dog.isFavorite);
-                }}
-                onHeartClick={() => {
-                  handleUpdateFavoriteStatus(dog.id, dog.isFavorite);
-                }}
-                isLoading={false}
-              />
-            ))}
-          </FunctionalDogs>
+
+        {currentView === "createDog" && (
+          <FunctionalCreateDogForm
+            createDog={createDog}
+            //isLoading={isLoading}
+          />
         )}
-        {activeTab === "unFavoriteDogs" && (
-          <FunctionalDogs>
-            {unFavoriteDogs.map((dog) => (
-              <DogCard
-                key={dog.id}
-                dog={dog}
-                onTrashIconClick={() => {
-                  handleDeleteClick(dog.id);
-                }}
-                onEmptyHeartClick={() => {
-                  handleEmptyHeartClick(dog.id, !dog.isFavorite);
-                }}
-                onHeartClick={() => {
-                  handleUpdateFavoriteStatus(dog.id, dog.isFavorite);
-                }}
-                isLoading={false}
-              />
-            ))}
-          </FunctionalDogs>
-        )}
-        {activeTab === "create" && (
-          <FunctionalCreateDogForm createDog={createDog} />
-        )}
-        {/* <FunctionalDogs>
-          {activeTab === "all" &&
-            allDogs.map((dog) => (
-              <DogCard
-                key={dog.id}
-                dog={dog}
-                onTrashIconClick={() => {
-                  handleDeleteClick(dog.id);
-                }}
-                onEmptyHeartClick={() => {
-                  handleEmptyHeartClick(dog.id, !dog.isFavorite);
-                }}
-                onHeartClick={() => {
-                  handleUpdateFavoriteStatus(dog.id, dog.isFavorite);
-                }}
-                isLoading={false}
-              />
-            ))}
-          {activeTab === "favoriteDogs" &&
-            favoriteDogs.map((dog) => (
-              <DogCard
-                key={dog.id}
-                dog={dog}
-                onTrashIconClick={() => {
-                  handleDeleteClick(dog.id);
-                }}
-                onEmptyHeartClick={() => {
-                  handleEmptyHeartClick(dog.id, !dog.isFavorite);
-                }}
-                onHeartClick={() => {
-                  handleUpdateFavoriteStatus(dog.id, dog.isFavorite);
-                }}
-                isLoading={false}
-              />
-            ))}
-          {activeTab === "unFavoriteDogs" &&
-            unFavoriteDogs.map((dog) => (
-              <DogCard
-                key={dog.id}
-                dog={dog}
-                onTrashIconClick={() => {
-                  handleDeleteClick(dog.id);
-                }}
-                onEmptyHeartClick={() => {
-                  handleEmptyHeartClick(dog.id, !dog.isFavorite);
-                }}
-                onHeartClick={() => {
-                  handleUpdateFavoriteStatus(dog.id, dog.isFavorite);
-                }}
-                isLoading={false}
-              />
-            ))}
-        </FunctionalDogs>
-        
-        <FunctionalCreateDogForm/> */}
       </div>
     </section>
   );
 };
-function refetchData() {
-  throw new Error("Function not implemented.");
-}

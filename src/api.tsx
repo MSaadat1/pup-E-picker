@@ -16,7 +16,12 @@ export const Requests = {
       headers: {
         "Content-Type": "application/json",
       },
-    }).then((res) => res.json());
+    }).then((res) => {
+      if (!res.ok) {
+        throw new Error(`HTTP request failed! Status: ${res.status}`);
+      }
+      return res.json();
+    });
   },
 
   // should delete a dog from the database
@@ -26,17 +31,27 @@ export const Requests = {
       headers: {
         "Content-Type": "application/json",
       },
-    }).then((res) => res.json());
+    }).then((res) => {
+      if (!res.ok) {
+        throw new Error(`HTTP request failed! Status: ${res.status}`);
+      }
+      return res.json();
+    });
   },
 
-  updateDog: (dogId: number, updatedDogData: Dog) => {
+  updateDog: (dogId: number, updatedDogData: Partial<Dog>) => {
     return fetch(`${baseUrl}/dogs/${dogId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(updatedDogData),
-    }).then((res) => res.json());
+    }).then((res) => {
+      if (!res.ok) {
+        throw new Error(`HTTP request failed! Status: ${res.status}`);
+      }
+      return res.json();
+    });
   },
 
   // Just a dummy function for use in the playground

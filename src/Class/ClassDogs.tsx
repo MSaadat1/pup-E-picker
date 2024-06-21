@@ -1,13 +1,18 @@
-import { DogCard } from "../Shared/DogCard";
-import { Component } from "react";
-import { dogPictures } from "../dog-pictures";
+//import { DogCard } from "../Shared/DogCard";
+import { Component , ReactNode} from "react";
+//import { dogPictures } from "../dog-pictures";
+
+interface Props {
+  children: ReactNode
+}
 
 // Right now these dogs are constant, but in reality we should be getting these from our server
-export class ClassDogs extends Component {
+export class ClassDogs extends Component<Props> { 
   render() {
     return (
       <>
-        <DogCard
+      {this.props.children}
+        {/* <DogCard
           dog={{
             id: 1,
             image: dogPictures.BlueHeeler,
@@ -86,7 +91,7 @@ export class ClassDogs extends Component {
             alert("clicked empty heart");
           }}
           isLoading={false}
-        />
+        /> */}
       </>
     );
   }

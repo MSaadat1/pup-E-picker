@@ -1,142 +1,128 @@
 {
   "dogs": [
     {
-      "name": "",
-      "image": "",
-      "description": "",
-      "isFavorite": false,
+      "name": "Charlotte",
+      "image": "/assets/dalmation.png",
+      "description": "even though quixotic although realistic",
+      "isFavorite": true,
       "id": 0
     },
     {
-      "name": "Itzel",
-      "image": "/assets/boxer.png",
-      "description": "unexpectedly quirkily where phooey enormously",
+      "name": "",
+      "image": "",
+      "description": "",
       "isFavorite": true,
       "id": 1
     },
     {
-      "name": "",
-      "image": "",
-      "description": "",
-      "isFavorite": false,
-      "id": 2
-    },
-    {
-      "name": "",
-      "image": "",
-      "description": "",
+      "name": "Maynard",
+      "image": "/assets/chihuahua.avif",
+      "description": "vice if quickly when zowie",
       "isFavorite": true,
-      "id": 3
-    },
-    {
-      "name": "",
-      "image": "",
-      "description": "",
-      "isFavorite": false,
       "id": 4
     },
     {
-      "name": "Monserrate",
-      "image": "/assets/corgi.png",
-      "description": "bah satirise deficit yippee before yearningly skinny",
+      "name": "",
+      "image": "",
+      "description": "",
       "isFavorite": false,
       "id": 5
     },
     {
-      "name": "Kraig",
-      "image": "/assets/cowardly.png",
-      "description": "fray pace faithfully franchise keenly psst what foundation",
+      "name": "Nikita",
+      "image": "/assets/dalmation.png",
+      "description": "dim whereas which immediately take-out underclothes diamond",
       "isFavorite": true,
       "id": 6
     },
     {
-      "name": "Hertha",
-      "image": "/assets/dalmation.png",
-      "description": "porthole careful whether of chronicle yowza fix giggle",
-      "isFavorite": false,
+      "name": "Bret",
+      "image": "/assets/blue-heeler.png",
+      "description": "although repulsive ick or defiant",
+      "isFavorite": true,
       "id": 7
     },
     {
-      "name": "Etha",
-      "image": "/assets/boxer.png",
-      "description": "weakly which oh because indeed",
+      "name": "Kiel",
+      "image": "/assets/corgi.png",
+      "description": "aged vacantly phew hidden deregulate staid developer",
       "isFavorite": false,
       "id": 8
     },
     {
-      "name": "Aurore",
-      "image": "/assets/corgi.png",
-      "description": "irritably sniffle hateful gee until truthfully outpace",
-      "isFavorite": true,
+      "name": "Hildegard",
+      "image": "/assets/boxer.png",
+      "description": "electronics glass fairly opportunist page underneath because",
+      "isFavorite": false,
       "id": 9
     },
     {
-      "name": "Bradley",
-      "image": "/assets/cowardly.png",
-      "description": "analyst airmail behind slowly enthusiastically cat gullible gadzooks",
+      "name": "Roma",
+      "image": "/assets/chihuahua.avif",
+      "description": "decline at ick along yippee unnaturally tugboat questioningly",
       "isFavorite": true,
       "id": 10
     },
     {
-      "name": "Jaren",
-      "image": "/assets/cowardly.png",
-      "description": "informal curvy yuck triumphantly incomparable trivialize indeed",
-      "isFavorite": true,
+      "name": "Kade",
+      "image": "/assets/chihuahua.avif",
+      "description": "dictator like gleeful upward envisage smart ugh",
+      "isFavorite": false,
       "id": 11
     },
     {
-      "name": "",
-      "image": "",
-      "description": "",
-      "isFavorite": true,
+      "name": "Darrin",
+      "image": "/assets/chihuahua.avif",
+      "description": "ew pocket when boo terribly",
+      "isFavorite": false,
       "id": 12
     },
     {
-      "name": "",
-      "image": "",
-      "description": "",
+      "name": "Giuseppe",
+      "image": "/assets/boxer.png",
+      "description": "um digital ew unethically curse editing utterly",
       "isFavorite": true,
       "id": 13
     },
     {
-      "name": "Elta",
-      "image": "/assets/chihuahua.avif",
-      "description": "before adhere ah alongside as death exhibition",
+      "name": "Martine",
+      "image": "/assets/dalmation.png",
+      "description": "geez flawed as mmm whether",
       "isFavorite": true,
       "id": 14
     },
     {
-      "name": "Lauretta",
-      "image": "/assets/cowardly.png",
-      "description": "stained external canvass glossy subtend",
-      "isFavorite": false,
+      "name": "Kennedi",
+      "image": "/assets/boxer.png",
+      "description": "excepting ack brr mmm concerning enthusiastically above deafening",
+      "isFavorite": true,
       "id": 15
     },
     {
-      "name": "Brando",
-      "image": "/assets/dalmation.png",
-      "description": "painfully multicolored zesty er warmhearted kookily tank-top",
-      "isFavorite": false,
+      "name": "Jamel",
+      "image": "/assets/blue-heeler.png",
+      "description": "aboard intensely aha rude downgrade yahoo loosely paraphrase",
+      "isFavorite": true,
       "id": 16
     },
     {
-      "name": "Ivy",
-      "image": "/assets/blue-heeler.png",
-      "description": "regarding once reoffend antique bah",
-      "isFavorite": true,
+      "name": "Sophia",
+      "image": "/assets/dalmation.png",
+      "description": "wavy con creep off strange down before oh",
+      "isFavorite": false,
       "id": 17
     },
     {
-      "name": "Eulalia",
+      "name": "Nola",
       "image": "/assets/corgi.png",
-      "description": "boo um approach empower including can authorize",
-      "isFavorite": true,
+      "description": "upward yippee among out baffle passionate incidentally next",
+      "isFavorite": false,
       "id": 18
     },
     {
-      "name": "Watson",
+      "name": "Caleigh",
       "image": "/assets/blue-heeler.png",
-      "description": "terribly pertinent jackfruit oasis if",
+      "description": "oily foolhardy explicate replace nor",
       "isFavorite": true,
       "id": 19
     }
