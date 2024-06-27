@@ -1,18 +1,23 @@
 import { ChangeEvent, Component } from "react";
 import { dogPictures } from "../dog-pictures";
-import { AppState } from "./ClassApp";
+import { Dog } from "../types";
 
-interface classCreateDogFormState {
+interface ClassCreateDogFormState {
   dogName: string;
   dogPicture: string;
   dogDescription: string;
 }
 
+interface ClassCreateDogFormProps {
+  isLoading: boolean;
+  createDog: (dogDate: Omit<Dog, "id">) => Promise<void>;
+}
+
 export class ClassCreateDogForm extends Component<
-  AppState,
-  classCreateDogFormState
+  ClassCreateDogFormProps,
+  ClassCreateDogFormState
 > {
-  state: classCreateDogFormState = {
+  state: ClassCreateDogFormState = {
     dogName: "",
     dogPicture: Object.values(dogPictures)[0],
     dogDescription: "",
@@ -26,7 +31,7 @@ export class ClassCreateDogForm extends Component<
   handleDogDescription = (even: ChangeEvent<HTMLTextAreaElement>) => {
     this.setState({ dogDescription: even.target.value });
   };
-  handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
+  handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { createDog } = this.props;
     const { dogName, dogPicture, dogDescription } = this.state;
@@ -36,9 +41,16 @@ export class ClassCreateDogForm extends Component<
       description: dogDescription,
       isFavorite: false,
     });
+    this.reset();
+  };
+  reset: () => void = () => {
+    this.setState({
+      dogName: "",
+      dogDescription: "",
+    });
   };
   render() {
-    //const { createDog } = this.props;
+    const { isLoading } = this.props;
     return (
       <form action="" id="create-dog-form" onSubmit={this.handleSubmit}>
         <h4>Create a New Dog</h4>
@@ -47,7 +59,7 @@ export class ClassCreateDogForm extends Component<
           type="text"
           value={this.state.dogName}
           onChange={this.handleDogNameChange}
-          disabled={false}
+          disabled={isLoading}
         />
         <label htmlFor="description">Dog Description</label>
         <textarea
@@ -55,8 +67,9 @@ export class ClassCreateDogForm extends Component<
           id=""
           cols={80}
           rows={10}
+          value={this.state.dogDescription}
           onChange={this.handleDogDescription}
-          disabled={false}
+          disabled={isLoading}
         />
         <label htmlFor="picture">Select an Image</label>
         <select
@@ -72,7 +85,7 @@ export class ClassCreateDogForm extends Component<
             );
           })}
         </select>
-        <input type="submit" value="submit" disabled={false} />
+        <input type="submit" value="submit" disabled={isLoading} />
       </form>
     );
   }

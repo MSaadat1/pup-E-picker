@@ -1,49 +1,30 @@
 // you can use this type for react children if you so choose
-//import { ReactNode } from "react";
+
 import { Link } from "react-router-dom";
-import { FunctionalDogs } from "./FunctionalDogs";
-import { DogCard } from "../Shared/DogCard";
 import { Dog } from "../types";
-import { Dispatch, SetStateAction} from "react";
-import { FunctionalCreateDogForm } from "./FunctionalCreateDogForm";
+import { Dispatch, SetStateAction } from "react";
 import { TActiveTab } from "./FunctionalApp";
 
 interface FunctionalSectionProps {
-  allDogs: Dog[];
+  dogsList: Record<TActiveTab, Dog[]>;
   currentView: TActiveTab;
   setCurrentView: Dispatch<SetStateAction<TActiveTab>>;
-  favoritedDogs: Dog[];
-  unfavoritedDogs: Dog[];
-  handleDeleteClick: (id: number) => Promise<void>;
-  handleEmptyHeartClick: (id: number, isFavorite: boolean) => Promise<void>;
-  handleFilledHeartClick: (id: number, isFavorite: boolean) => Promise<void>;
-  createDog: (dogData: Omit<Dog, "id">) => Promise<void>;
-  isLoading: boolean;
+  children: React.ReactNode;
 }
 
 export const FunctionalSection: React.FC<FunctionalSectionProps> = ({
-  allDogs,
+  dogsList,
   currentView,
   setCurrentView,
-  favoritedDogs,
-  unfavoritedDogs,
-  handleDeleteClick,
-  handleEmptyHeartClick,
-  handleFilledHeartClick,
-  createDog,
-  isLoading,
+  children,
 }) => {
   const handleActiveTab = (tab: TActiveTab) => {
     const nextView = tab === currentView ? "all" : tab;
     setCurrentView(nextView);
   };
 
-  const dogsList: Record<TActiveTab, Dog[]> = {
-    all: allDogs,
-    favorited: favoritedDogs,
-    unfavorited: unfavoritedDogs,
-    createDog: [],
-  };
+  const favoritedDogsCount = dogsList["favorited"].length;
+  const unfavoritedDogsCount = dogsList["unfavorited"].length;
 
   return (
     <section id="main-section">
@@ -59,7 +40,7 @@ export const FunctionalSection: React.FC<FunctionalSectionProps> = ({
             }`}
             onClick={() => handleActiveTab("favorited")}
           >
-            Favorited Dogs({favoritedDogs.length})
+            Favorited Dogs({favoritedDogsCount})
           </div>
           <div
             className={`selector ${
@@ -67,7 +48,7 @@ export const FunctionalSection: React.FC<FunctionalSectionProps> = ({
             }`}
             onClick={() => handleActiveTab("unfavorited")}
           >
-            Unfavorited Dogs({unfavoritedDogs.length})
+            Unfavorited Dogs({unfavoritedDogsCount})
           </div>
           <div
             className={`selector ${
@@ -79,35 +60,7 @@ export const FunctionalSection: React.FC<FunctionalSectionProps> = ({
           </div>
         </div>
       </div>
-      <div className="content-container">
-        {currentView !== "createDog" && (
-          <FunctionalDogs>
-            {dogsList[currentView].map((dog) => (
-              <DogCard
-                key={dog.id}
-                dog={dog}
-                onTrashIconClick={() => {
-                  handleDeleteClick(dog.id);
-                }}
-                onEmptyHeartClick={() => {
-                  handleEmptyHeartClick(dog.id, !dog.isFavorite);
-                }}
-                onHeartClick={() => {
-                  handleFilledHeartClick(dog.id, dog.isFavorite);
-                }}
-                isLoading={isLoading}
-              />
-            ))}
-          </FunctionalDogs>
-        )}
-
-        {currentView === "createDog" && (
-          <FunctionalCreateDogForm
-            createDog={createDog}
-            //isLoading={isLoading}
-          />
-        )}
-      </div>
+      <div className="content-container">{children}</div>
     </section>
   );
 };

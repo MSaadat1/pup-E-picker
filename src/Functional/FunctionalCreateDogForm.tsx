@@ -6,18 +6,20 @@ import { Dog } from "../types";
 const defaultSelectedImage = dogPictures.BlueHeeler;
 
 export const FunctionalCreateDogForm = ({
+  isLoading,
   createDog,
 }: {
+  isLoading: boolean;
   createDog: (dogs: Omit<Dog, "id">) => void;
 }) => {
   const [dogName, setDogName] = useState("");
   const [dogPicture, setDogPicture] = useState(defaultSelectedImage);
   const [dogDescription, setDogDescription] = useState("");
-  
-  const reset: ()=> void = () => {
+
+  const reset: () => void = () => {
     setDogName("");
     setDogDescription("");
-  }
+  };
 
   return (
     <form
@@ -38,7 +40,7 @@ export const FunctionalCreateDogForm = ({
       <label htmlFor="name">Dog Name</label>
       <input
         type="text"
-        disabled={false}
+        disabled={isLoading}
         value={dogName}
         onChange={(e) => {
           setDogName(e.target.value);
@@ -50,7 +52,7 @@ export const FunctionalCreateDogForm = ({
         id=""
         cols={80}
         rows={10}
-        disabled={false}
+        disabled={isLoading}
         value={dogDescription}
         onChange={(e) => {
           setDogDescription(e.target.value);
@@ -60,6 +62,7 @@ export const FunctionalCreateDogForm = ({
       <select
         id="picture"
         value={dogPicture}
+        disabled={isLoading}
         onChange={(e) => {
           setDogPicture(e.target.value);
         }}
@@ -72,7 +75,7 @@ export const FunctionalCreateDogForm = ({
           );
         })}
       </select>
-      <input type="submit" />
+      <input type="submit" value="submit" disabled={isLoading} />
     </form>
   );
 };

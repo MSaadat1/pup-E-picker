@@ -8,31 +8,17 @@
       "id": 0
     },
     {
-      "name": "",
-      "image": "",
-      "description": "",
-      "isFavorite": true,
-      "id": 1
-    },
-    {
       "name": "Maynard",
       "image": "/assets/chihuahua.avif",
       "description": "vice if quickly when zowie",
-      "isFavorite": true,
-      "id": 4
-    },
-    {
-      "name": "",
-      "image": "",
-      "description": "",
       "isFavorite": false,
-      "id": 5
+      "id": 4
     },
     {
       "name": "Nikita",
       "image": "/assets/dalmation.png",
       "description": "dim whereas which immediately take-out underclothes diamond",
-      "isFavorite": true,
+      "isFavorite": false,
       "id": 6
     },
     {
@@ -46,21 +32,21 @@
       "name": "Kiel",
       "image": "/assets/corgi.png",
       "description": "aged vacantly phew hidden deregulate staid developer",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 8
     },
     {
       "name": "Hildegard",
       "image": "/assets/boxer.png",
       "description": "electronics glass fairly opportunist page underneath because",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 9
     },
     {
       "name": "Roma",
       "image": "/assets/chihuahua.avif",
       "description": "decline at ick along yippee unnaturally tugboat questioningly",
-      "isFavorite": true,
+      "isFavorite": false,
       "id": 10
     },
     {
@@ -81,7 +67,7 @@
       "name": "Giuseppe",
       "image": "/assets/boxer.png",
       "description": "um digital ew unethically curse editing utterly",
-      "isFavorite": true,
+      "isFavorite": false,
       "id": 13
     },
     {
@@ -95,7 +81,7 @@
       "name": "Kennedi",
       "image": "/assets/boxer.png",
       "description": "excepting ack brr mmm concerning enthusiastically above deafening",
-      "isFavorite": true,
+      "isFavorite": false,
       "id": 15
     },
     {
@@ -109,7 +95,7 @@
       "name": "Sophia",
       "image": "/assets/dalmation.png",
       "description": "wavy con creep off strange down before oh",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 17
     },
     {
@@ -125,6 +111,13 @@
       "description": "oily foolhardy explicate replace nor",
       "isFavorite": true,
       "id": 19
+    },
+    {
+      "name": "Alice",
+      "image": "/assets/boxer.jpeg",
+      "description": "Alice is a nice and smart dog!",
+      "isFavorite": true,
+      "id": 20
     }
   ]
 }

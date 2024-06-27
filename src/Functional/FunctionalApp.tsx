@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { FunctionalSection } from "./FunctionalSection";
 import { Requests } from "../api";
 import { Dog } from "../types";
+import toast from "react-hot-toast";
+import { FunctionalCreateDogForm } from "./FunctionalCreateDogForm";
+import { FunctionalDogs } from "./FunctionalDogs";
 
 export type TActiveTab = "all" | "favorited" | "unfavorited" | "createDog";
 
@@ -21,18 +24,7 @@ export function FunctionalApp() {
     refetchData();
   }, []);
 
-  const handleFilledHeartClick = (id: number, isFavorite: boolean) => {
-    setIsLoading(true);
-    return Requests.updateDog(id, {
-      isFavorite: !isFavorite,
-    })
-    .then(() => refetchData())
-    .finally(()=>{
-      setIsLoading(false)
-    })
-  };
-
-  const handleEmptyHeartClick = (id: number, isFavorite: boolean) => {
+  const handleFavoritedDogs = (id: number, isFavorite: boolean) => {
     setIsLoading(true);
     return Requests.updateDog(id, {
       isFavorite: isFavorite,
@@ -43,7 +35,7 @@ export function FunctionalApp() {
       });
   };
 
-  const handleDeleteClick = (id: number) => {
+  const handleDeleteDog = (id: number) => {
     setIsLoading(true);
     return Requests.deleteDog(id)
       .then(() => refetchData())
@@ -52,10 +44,21 @@ export function FunctionalApp() {
       });
   };
 
-  const createDog = (dogs: Omit<Dog, "id">) => {
-    return Requests.postDog(dogs).then(() => {
-      refetchData();
-    });
+  const handleCreateDog = (dogs: Omit<Dog, "id">) => {
+    setIsLoading(true);
+    return Requests.postDog(dogs)
+      .then(() => refetchData())
+      .finally(() => {
+        toast.success("The dog was created successfully!");
+        setIsLoading(false);
+      });
+  };
+
+  const dogsList: Record<TActiveTab, Dog[]> = {
+    all: allDogs,
+    favorited: favoritedDogs,
+    unfavorited: unfavoritedDogs,
+    createDog: [],
   };
 
   return (
@@ -64,17 +67,26 @@ export function FunctionalApp() {
         <h1>pup-e-picker (Functional)</h1>
       </header>
       <FunctionalSection
-        allDogs={allDogs}
+        dogsList={dogsList}
         currentView={currentView}
-        favoritedDogs={favoritedDogs}
-        unfavoritedDogs={unfavoritedDogs}
         setCurrentView={setCurrentView}
-        createDog={createDog}
-        isLoading={isLoading}
-        handleEmptyHeartClick={handleEmptyHeartClick}
-        handleDeleteClick={handleDeleteClick}
-        handleFilledHeartClick={handleFilledHeartClick}
-      />
+      >
+        {currentView === "createDog" && (
+          <FunctionalCreateDogForm
+            isLoading={isLoading}
+            createDog={handleCreateDog}
+          />
+        )}
+        {currentView !== "createDog" && (
+          <FunctionalDogs
+            dogsList={dogsList}
+            currentView={currentView}
+            handleFavoritedDogs={handleFavoritedDogs}
+            deleteDog={handleDeleteDog}
+            isLoading={isLoading}
+          />
+        )}
+      </FunctionalSection>
     </div>
   );
 }

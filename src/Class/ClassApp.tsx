@@ -2,66 +2,50 @@ import { Component } from "react";
 import { ClassSection } from "./ClassSection";
 import { Dog } from "../types.ts";
 import { Requests } from "../api.tsx";
+import { ClassCreateDogForm } from "./ClassCreateDogForm.tsx";
+import { ClassDogs } from "./ClassDogs.tsx";
+import toast from "react-hot-toast";
 
 export type TActiveTab = "all" | "favorited" | "unfavorited" | "createDog";
 export interface AppState {
+  dogsList: Record<TActiveTab, Dog[]>;
   isLoading: boolean;
   allDogs: Dog[];
   currentView: TActiveTab;
   favoritedDogs: Dog[];
   unfavoritedDogs: Dog[];
-  setIsLoading: (isLoading: boolean) => void;
-  setAllDogs: (allDogs: Dog[]) => void;
-  setCurrentView: (currentView: TActiveTab) => void;
-  handleFilledHeartClick: (id: number, isFavorite: boolean) => Promise<void>;
-  handleEmptyHeartClick: (id: number, isFavorite: boolean) => Promise<void>;
-  handleDeleteClick: (id: number) => Promise<void>;
-  createDog: (dogDate: Omit<Dog, "id">) => Promise<void>;
 }
 export class ClassApp extends Component<{}, AppState> {
   state: AppState = {
     isLoading: false,
     allDogs: [],
+    dogsList: {
+      all: [],
+      favorited: [],
+      unfavorited: [],
+      createDog: [],
+    },
     currentView: "all",
     favoritedDogs: [],
     unfavoritedDogs: [],
-    setIsLoading: function (): void {
-      throw new Error("Function not implemented.");
-    },
-    setAllDogs: function (): void {
-      throw new Error("Function not implemented.");
-    },
-    setCurrentView: function (): void {
-      throw new Error("Function not implemented.");
-    },
-    handleFilledHeartClick: function (): Promise<void> {
-      throw new Error("Function not implemented.");
-    },
-    handleEmptyHeartClick: function (): Promise<void> {
-      throw new Error("Function not implemented.");
-    },
-    handleDeleteClick: function (): Promise<void> {
-      throw new Error("Function not implemented.");
-    },
-    createDog: function (): Promise<void> {
-      throw new Error("Function not implemented.");
-    },
   };
 
   setIsLoading = (isLoading: boolean) => {
     this.setState({ isLoading });
   };
   setAllDogs = (allDogs: Dog[]) => {
-    this.setState({ allDogs });
+    const favoritedDogs = allDogs.filter((dog) => dog.isFavorite);
+    const unfavoritedDogs = allDogs.filter((dog) => !dog.isFavorite);
+    const dogsList = {
+      all: allDogs,
+      favorited: favoritedDogs,
+      unfavorited: unfavoritedDogs,
+      createDog: [],
+    };
+    this.setState({ allDogs, dogsList, favoritedDogs, unfavoritedDogs });
   };
   setCurrentView = (currentView: TActiveTab) => {
     this.setState({ currentView });
-  };
-  getFavoritedDogs = () => {
-    return this.state.allDogs.filter((dog) => dog.isFavorite);
-  };
-  getUnFavoritedDogs = () => {
-    return this.state.allDogs.filter((dog) => !dog.isFavorite);
   };
 
   componentDidMount(): void {
@@ -69,23 +53,17 @@ export class ClassApp extends Component<{}, AppState> {
   }
 
   refetchData = () => {
-    return Requests.getAllDogs().then((dogs) => {
-      this.setAllDogs(dogs);
-    });
-  };
-
-  handleFilledHeartClick = (id: number, isFavorite: boolean) => {
     this.setIsLoading(true);
-    return Requests.updateDog(id, {
-      isFavorite: !isFavorite,
-    })
-      .then(() => this.refetchData())
+    return Requests.getAllDogs()
+      .then((dogs) => {
+        this.setAllDogs(dogs);
+      })
       .finally(() => {
         this.setIsLoading(false);
       });
   };
 
-  handleEmptyHeartClick = (id: number, isFavorite: boolean) => {
+  handleFavoritedDogs = (id: number, isFavorite: boolean) => {
     this.setIsLoading(true);
     return Requests.updateDog(id, {
       isFavorite: isFavorite,
@@ -105,15 +83,20 @@ export class ClassApp extends Component<{}, AppState> {
       });
   };
 
-  createDog = (dogs: Omit<Dog, "id">) => {
-    return Requests.postDog(dogs).then(() => {
-      this.refetchData();
-    });
+  handleCreateDog = (dogs: Omit<Dog, "id">) => {
+    this.setIsLoading(true);
+    return Requests.postDog(dogs)
+      .then(() => {
+        this.refetchData();
+      })
+      .finally(() => {
+        toast.success("The dog was created successfully!");
+        this.setIsLoading(false);
+      });
   };
+
   render() {
-    const { allDogs, currentView, isLoading } = this.state;
-    const favoritedDogs = this.getFavoritedDogs();
-    const unfavoritedDogs = this.getUnFavoritedDogs();
+    const { currentView, dogsList, isLoading } = this.state;
 
     return (
       <div className="App" style={{ backgroundColor: "goldenrod" }}>
@@ -121,23 +104,26 @@ export class ClassApp extends Component<{}, AppState> {
           <h1>pup-e-picker (Class Version)</h1>
         </header>
         <ClassSection
-          isLoading={isLoading}
-          allDogs={allDogs}
+          dogsList={dogsList}
           currentView={currentView}
-          favoritedDogs={favoritedDogs}
-          unfavoritedDogs={unfavoritedDogs}
-          setIsLoading={this.setIsLoading}
-          setAllDogs={this.setAllDogs}
           setCurrentView={this.setCurrentView}
-          handleFilledHeartClick={this.handleFilledHeartClick}
-          handleEmptyHeartClick={this.handleEmptyHeartClick}
-          handleDeleteClick={this.handleDeleteClick}
-          createDog={this.createDog}
-        />
-
-        {/* should be inside of the ClassSection component using react children */}
-        {/* <ClassDogs /> */}
-        {/* <ClassCreateDogForm /> */}
+        >
+          {currentView === "createDog" && (
+            <ClassCreateDogForm
+              isLoading={isLoading}
+              createDog={this.handleCreateDog}
+            />
+          )}
+          {currentView !== "createDog" && (
+            <ClassDogs
+              dogsList={dogsList}
+              currentView={currentView}
+              handleFavoritedDogs={this.handleFavoritedDogs}
+              deleteDog={this.handleDeleteClick}
+              isLoading={isLoading}
+            />
+          )}
+        </ClassSection>
       </div>
     );
   }

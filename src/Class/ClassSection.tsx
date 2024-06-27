@@ -1,38 +1,27 @@
 // you can use `ReactNode` to add a type to the children prop
-import { Component, ReactNode } from "react";
+import { Component, Dispatch } from "react";
 import { Link } from "react-router-dom";
-import { AppState } from "./ClassApp";
-import { ClassDogs } from "./ClassDogs";
-import { DogCard } from "../Shared/DogCard";
 import { Dog } from "../types";
 import { TActiveTab } from "./ClassApp";
-import { FunctionalCreateDogForm } from "../Functional/FunctionalCreateDogForm";
 
-export class ClassSection extends Component<AppState> {
+interface ClassSectionProps {
+  dogsList: Record<TActiveTab, Dog[]>;
+  currentView: TActiveTab;
+  setCurrentView: Dispatch<TActiveTab>;
+  children: React.ReactNode;
+}
+
+export class ClassSection extends Component<ClassSectionProps> {
   handleActiveTab = (tab: TActiveTab) => {
-    const nextView = this.props.currentView === tab ? "all" : tab;
+    const nextView = tab === this.props.currentView ? "all" : tab;
     this.props.setCurrentView(nextView);
   };
 
   render() {
-    const {
-      isLoading,
-      allDogs,
-      currentView,
-      favoritedDogs,
-      unfavoritedDogs,
-      handleFilledHeartClick,
-      handleEmptyHeartClick,
-      handleDeleteClick,
-      createDog
-    } = this.props;
+    const { currentView, children, dogsList } = this.props;
+    const favoritedDogsCount = dogsList["favorited"].length;
+    const unfavoriteDogsCount = dogsList["unfavorited"].length;
 
-    const dogsList: Record<TActiveTab, Dog[]> = {
-      all: allDogs,
-      favorited: favoritedDogs,
-      unfavorited: unfavoritedDogs,
-      createDog: [],
-    };
     return (
       <section id="main-section">
         <div className="container-header">
@@ -50,7 +39,7 @@ export class ClassSection extends Component<AppState> {
               }`}
               onClick={() => this.handleActiveTab("favorited")}
             >
-              favorited ( {favoritedDogs.length} )
+              favorited ( {favoritedDogsCount} )
             </div>
 
             {/* This should display the unfavorited count */}
@@ -60,42 +49,19 @@ export class ClassSection extends Component<AppState> {
               }`}
               onClick={() => this.handleActiveTab("unfavorited")}
             >
-              unfavorited ({unfavoritedDogs.length} )
+              unfavorited ({unfavoriteDogsCount} )
             </div>
-            <div className={`selector active ${
-              currentView === "createDog" ? "active" : ""
-            }`} onClick={()=> this.handleActiveTab("createDog")}>
+            <div
+              className={`selector  ${
+                currentView === "createDog" ? "active" : ""
+              }`}
+              onClick={() => this.handleActiveTab("createDog")}
+            >
               create dog
             </div>
           </div>
         </div>
-        <div className="content-container">
-          {currentView !== "createDog" && (
-            <ClassDogs>
-              {dogsList[currentView].map((dog) => (
-                <DogCard
-                  key={dog.id}
-                  dog={dog}
-                  onTrashIconClick={() => {
-                    handleDeleteClick(dog.id);
-                  }}
-                  onHeartClick={() => {
-                    handleFilledHeartClick(dog.id, dog.isFavorite);
-                  }}
-                  onEmptyHeartClick={() => {
-                    handleEmptyHeartClick(dog.id, !dog.isFavorite);
-                  }}
-                  isLoading={isLoading}
-                />
-              ))}
-            </ClassDogs>
-          )}
-          {currentView === "createDog" && (
-            <FunctionalCreateDogForm
-            createDog={createDog}
-            />
-          )}
-        </div>
+        <div className="content-container">{children}</div>
       </section>
     );
   }
