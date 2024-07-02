@@ -27,7 +27,7 @@ export const Home = () => {
         }}
       >
         <p>
-          Make an app to favorite some puppies! You'll need to treat both your{" "}
+          Make an app to favorite some puppies! You&apos;ll need to treat both your{" "}
           <i style={{ backgroundColor: "gray", color: "white", padding: 2 }}>
             Functional App
           </i>{" "}

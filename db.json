@@ -67,7 +67,7 @@
       "name": "Giuseppe",
       "image": "/assets/boxer.png",
       "description": "um digital ew unethically curse editing utterly",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 13
     },
     {
@@ -118,6 +118,13 @@
       "description": "Alice is a nice and smart dog!",
       "isFavorite": true,
       "id": 20
+    },
+    {
+      "name": "helu",
+      "image": "/assets/blue-heeler.png",
+      "description": "jjjjjj",
+      "isFavorite": false,
+      "id": 21
     }
   ]
 }

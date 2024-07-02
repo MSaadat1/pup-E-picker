@@ -7,15 +7,15 @@ import { ClassDogs } from "./ClassDogs.tsx";
 import toast from "react-hot-toast";
 
 export type TActiveTab = "all" | "favorited" | "unfavorited" | "createDog";
-export interface AppState {
+export type AppState = {
   dogsList: Record<TActiveTab, Dog[]>;
   isLoading: boolean;
   allDogs: Dog[];
   currentView: TActiveTab;
   favoritedDogs: Dog[];
   unfavoritedDogs: Dog[];
-}
-export class ClassApp extends Component<{}, AppState> {
+};
+export class ClassApp extends Component<Record<string, never>, AppState> {
   state: AppState = {
     isLoading: false,
     allDogs: [],
@@ -69,6 +69,12 @@ export class ClassApp extends Component<{}, AppState> {
       isFavorite: isFavorite,
     })
       .then(() => this.refetchData())
+      .then(() => {
+        toast.success("The dog was updated successfully!");
+      })
+      .catch(() => {
+        toast.error("Failed to updated the dog!");
+      })
       .finally(() => {
         this.setIsLoading(false);
       });
@@ -78,6 +84,12 @@ export class ClassApp extends Component<{}, AppState> {
     this.setIsLoading(true);
     return Requests.deleteDog(id)
       .then(() => this.refetchData())
+      .then(() => {
+        toast.success("The dog was deleted successfully!");
+      })
+      .catch(() => {
+        toast.error("Failed to delete the dog!");
+      })
       .finally(() => {
         this.setIsLoading(false);
       });
@@ -89,8 +101,13 @@ export class ClassApp extends Component<{}, AppState> {
       .then(() => {
         this.refetchData();
       })
-      .finally(() => {
+      .then(() => {
         toast.success("The dog was created successfully!");
+      })
+      .catch(() => {
+        toast.error("Failed to create the dog!");
+      })
+      .finally(() => {
         this.setIsLoading(false);
       });
   };

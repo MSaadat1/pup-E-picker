@@ -19,6 +19,7 @@ export const FunctionalCreateDogForm = ({
   const reset: () => void = () => {
     setDogName("");
     setDogDescription("");
+    setDogPicture(defaultSelectedImage);
   };
 
   return (

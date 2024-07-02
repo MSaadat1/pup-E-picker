@@ -12,11 +12,14 @@ export function FunctionalApp() {
   const [isLoading, setIsLoading] = useState(false);
   const [allDogs, setAllDogs] = useState<Dog[]>([]);
   const [currentView, setCurrentView] = useState<TActiveTab>("all");
+
   const favoritedDogs = allDogs.filter((dog) => dog.isFavorite);
   const unfavoritedDogs = allDogs.filter((dog) => !dog.isFavorite);
+
   const refetchData = () => {
     return Requests.getAllDogs().then((dogs) => {
       setAllDogs(dogs);
+      // toast.success('The dogs were successfully fetched!');
     });
   };
 
@@ -30,6 +33,12 @@ export function FunctionalApp() {
       isFavorite: isFavorite,
     })
       .then(() => refetchData())
+      .then(() => {
+        toast.success("The dog was updated successfully!");
+      })
+      .catch(() => {
+        toast.error("Failed to updated the dog!");
+      })
       .finally(() => {
         setIsLoading(false);
       });
@@ -39,6 +48,12 @@ export function FunctionalApp() {
     setIsLoading(true);
     return Requests.deleteDog(id)
       .then(() => refetchData())
+      .then(() => {
+        toast.success("The dog was deleted successfully!");
+      })
+      .catch(() => {
+        toast.error("Failed to delete the dog!");
+      })
       .finally(() => {
         setIsLoading(false);
       });
@@ -48,8 +63,13 @@ export function FunctionalApp() {
     setIsLoading(true);
     return Requests.postDog(dogs)
       .then(() => refetchData())
-      .finally(() => {
+      .then(() => {
         toast.success("The dog was created successfully!");
+      })
+      .catch(() => {
+        toast.error("Failed to create the dog!");
+      })
+      .finally(() => {
         setIsLoading(false);
       });
   };

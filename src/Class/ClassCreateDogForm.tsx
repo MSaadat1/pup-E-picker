@@ -2,16 +2,16 @@ import { ChangeEvent, Component } from "react";
 import { dogPictures } from "../dog-pictures";
 import { Dog } from "../types";
 
-interface ClassCreateDogFormState {
+type ClassCreateDogFormState = {
   dogName: string;
   dogPicture: string;
   dogDescription: string;
-}
+};
 
-interface ClassCreateDogFormProps {
+type ClassCreateDogFormProps = {
   isLoading: boolean;
   createDog: (dogDate: Omit<Dog, "id">) => Promise<void>;
-}
+};
 
 export class ClassCreateDogForm extends Component<
   ClassCreateDogFormProps,
@@ -22,15 +22,17 @@ export class ClassCreateDogForm extends Component<
     dogPicture: Object.values(dogPictures)[0],
     dogDescription: "",
   };
-  handleDogNameChange = (even: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ dogName: even.target.value });
+
+  handleStatePropertyValue = (
+    event: ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    this.setState({
+      [event.target.name]: event.target.value,
+    } as Record<keyof ClassCreateDogFormState, string>);
   };
-  handleDogPicture = (even: ChangeEvent<HTMLSelectElement>) => {
-    this.setState({ dogPicture: even.target.value });
-  };
-  handleDogDescription = (even: ChangeEvent<HTMLTextAreaElement>) => {
-    this.setState({ dogDescription: even.target.value });
-  };
+
   handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { createDog } = this.props;
@@ -47,6 +49,7 @@ export class ClassCreateDogForm extends Component<
     this.setState({
       dogName: "",
       dogDescription: "",
+      dogPicture: (dogPictures.BlueHeeler)
     });
   };
   render() {
@@ -56,24 +59,26 @@ export class ClassCreateDogForm extends Component<
         <h4>Create a New Dog</h4>
         <label htmlFor="name">Dog Name</label>
         <input
+          name="dogName"
           type="text"
           value={this.state.dogName}
-          onChange={this.handleDogNameChange}
+          onChange={this.handleStatePropertyValue}
           disabled={isLoading}
         />
         <label htmlFor="description">Dog Description</label>
         <textarea
-          name=""
-          id=""
+          name="dogDescription"
+          id="dogDescription"
           cols={80}
           rows={10}
           value={this.state.dogDescription}
-          onChange={this.handleDogDescription}
+          onChange={this.handleStatePropertyValue}
           disabled={isLoading}
         />
         <label htmlFor="picture">Select an Image</label>
         <select
-          onChange={this.handleDogPicture}
+          name="dogPicture"
+          onChange={this.handleStatePropertyValue}
           disabled={false}
           value={this.state.dogPicture}
         >
